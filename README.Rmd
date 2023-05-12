@@ -27,7 +27,11 @@ In addition, some goodness-of-fit statistics have been added for nonlinear model
 You can install the development version of chemdeg like so:
 
 ``` r
+# from CRAN
 install.packages("chemdeg")
+
+# from GitHub
+devtools::install_github("migliomatte/chemdeg")
 ```
 
 ## Usage

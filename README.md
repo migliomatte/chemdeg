@@ -19,7 +19,11 @@ been added for nonlinear models.
 You can install the development version of chemdeg like so:
 
 ``` r
+# from CRAN
 install.packages("chemdeg")
+
+# from GitHub
+devtools::install_github("migliomatte/chemdeg")
 ```
 
 ## Usage
@@ -114,7 +118,7 @@ summary(fit_fomt)
 #> Residual standard error: 0.04243 on 6 degrees of freedom
 #> 
 #> Number of iterations to convergence: 10 
-#> Achieved convergence tolerance: 3.955e-06
+#> Achieved convergence tolerance: 3.98e-06
 ```
 
 where `fomtdata` is an example data-frame provided with the package.
@@ -133,7 +137,7 @@ summary(fit_fomt1)
 #> 
 #> Parameters:
 #>   Estimate Std. Error t value Pr(>|t|)    
-#> n 9.478164   3.926142   2.414 0.052280 .  
+#> n 9.478163   3.926141   2.414 0.052280 .  
 #> k 0.056836   0.008206   6.926 0.000449 ***
 #> ---
 #> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
@@ -141,7 +145,7 @@ summary(fit_fomt1)
 #> Residual standard error: 0.04243 on 6 degrees of freedom
 #> 
 #> Number of iterations to convergence: 9 
-#> Achieved convergence tolerance: 5.33e-06
+#> Achieved convergence tolerance: 5.453e-06
 ```
 
 #### Goodness-of-fit statistics
