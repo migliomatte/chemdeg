@@ -34,3 +34,5 @@ Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
+URL: https://github.com/migliomatte/chemdeg
+BugReports: https://github.com/migliomatte/chemdeg/issues
