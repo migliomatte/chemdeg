@@ -1,0 +1,240 @@
+---
+title: "chemdeg basics"
+output: rmarkdown::html_vignette
+abstract: "The present vignette provides basic information for the correct use of the package chemdeg, a package thought to support the analysis of chemical degradation kinetics experiments. The vignette is structured as follows: in the \"Introduction\" section  the principles behind the mathematical approach will be explained; in \"Package usage\" section the main functions of the package are described and their outputs are shown; the \"Examples\" section shows the generic workflow of the program using data that have benn made available with the package and explains how to correctly use and interpret the results of the functions."
+vignette: >
+  %\VignetteIndexEntry{chemdeg basics}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(chemdeg)
+```
+
+## Introduction
+A key aspect in food science is the prediction of the change of food quality in time, and thus a quantitative analysis of the shelf life of foods and of their components is of paramount importance. `chemdeg` is a package developed to assist food chemists in the objective selection of degradation kinetic models of foods and parameters estimation. The software implements a two-step method to this purpose. First, experimental data are analyzed in the so-called phase space which allows for the estimation of the order of the reaction; then the data are fitted with the appropriate standard kinetic model to estimate the reaction rate. The whole procedure is driven by rigorous statistical analyses of the results. The package also provides a routine to fit a non-standard kinetic degradation model named first-order multi-target model (FOMT). 
+
+
+The standard degradation kinetics of food and of their components are described within the following differential equation which formalizes the mass-action law:
+$$\frac{d y}{d t}=-k\,y^n \tag{1}
+$$
+where $y$ is the concentration of the reactant (i.e. the concentration of the degrading food molecule), $t$ is the time, $k$ is the rate constant and $n$ is the order of reaction. The order $n$ can assume either integer (e.g. 0,1,2...) or fractional values as it may observed for complex degradation reactions like overall multistage reaction composed by single reactions with different reaction orders.
+
+A logarithmic transformation of the eq.(1) yields:
+$$ \log{|\frac{d y}{d t}}|=\log{k}+n\,\log{y}$$
+where $\log{}$ is the natural logarithm.
+
+A plot of $\log{|\frac{dy}{dt}|}$ versus $\log{y}$ defines the phase space of the dynamical system, and standard n^th^ reaction order kinetic models are here represented as straight lines with slope equal to $n$ and intercept equal to the logarithm of $k$. Derivatives are calculated with the central finite difference method.
+
+The slope can be easily determined by linear regression (weighted on experimental error if available) of log-transformed data.  Both known and unknown uncertainties can affect this estimation. Thus a first decision about the appropriate order of the reaction is taken by the program on the basis of the following four criteria:
+
+1. if the 95% confidence interval of $n$ includes one or more integer numbers, then the best estimate of the reaction order is that integer number or the integer which is closest to the mean estimate of $n$;
+2. if the 95% confidence interval of $n$ does not include integer numbers than the order of the reaction is considered fractional amd equal to its best estimate;
+3. if the estimated order $n$ is not statistically significant but the intercept is significant, then the most likely order of reaction is 0;
+4. if neither the estimates of the slope and the intercept are statistically significant then a different modelling approach must be considered. The package provides a possible non-linear alternative model (FOMT, see other model section)
+
+The general solution of eq.(1) is:
+$$
+y(t)=\begin{cases} 
+((n-1)\,k\,t+y_0^{1-n}))^{\frac{1}{n-1}} & \text{if $n\ne 0$} \\
+y_0\,e^{-k\,t} & \text{if $n=0$}
+\end{cases}
+$$
+Once the reation order has been determined, non-linear least squares regression can be performed using the above solution with the rate constant $k$ as free parameter. 
+
+## Package usage
+
+The function `det_order()` performs all in one the analysis described in the [Introduction] section. The input of the function must be an at least two-columns data-frame with time data in the first column and concentration in the second column. The values of experimental error can be given in the optional third column. Different input types or data-frames with less than two or more than 3 columns will return an error. The output of the function is an `ord_res` class object.  
+
+```{r}
+ord1 # simulated data from a first order kinetic model with error
+res <- det_order(ord1)
+
+class(res)
+```
+
+
+The function `results()` shows a comprehensive summary of the results. These include: 
+
+1. the results of linear regression performed in the phase space, the estimate of *n* and its confidence interval;
+2. a comment about the conclusion that can be drawn from the phase space analysis;
+3. the results of the regression performed on experimental data in the conventional concentration vs. time space with the solution of eq.(1), the estimate of the rate constant and its confidence interval;
+4. goodness-of-fit statistics of the final fit (see next section) 
+
+```{r}
+results(res)
+```
+
+The function `plot_ord()` allows the graphical visualization  of the results obtained with the whole analysis. Function automatically plots the experimental error when provided. In these plots, black lines show the best regression curve, whereas green lines show the fits with the reaction order chosen according to the criteria given in the previous section. 
+
+```{r}
+plot_ord(res)
+```
+
+The functions `phase_space()` and `kin_regr()` allow to retrieve the linear regression from the phase space and the regression with the selected model, respectively: 
+
+```{r}
+linear_model_phase_space <- phase_space(res)
+linear_model_phase_space
+
+kinetic_regression <- kin_regr(res)
+kinetic_regression
+```
+
+
+### Goodness-of-fit measures
+Goodness-of-fit statistics include functions that are already accessible in the package `stats`, like: Bayesian Information Criterion (`stats::BIC()`), Akaike's Information Criterion (`stats::AIC()`) and Root Mean Square Error (`stats::sigma()`). 
+
+In the package `chemdeg` two more measures are introduced, which are the reduced chi-squared ($\chi^2_{red}=\chi^2/df$, where $df$ are the degrees of freedom) and the Akaike's Information Criterion AICc corrected for finite samples. The values of both statistics are accessible with the functions `chiquad_red()` and `AICC()`, respectively. 
+
+```{r}
+chiquad_red(kinetic_regression)
+AICC(kinetic_regression)
+```
+
+
+The whole statistics can be accessed through the `goodness_of_fit()`function. 
+
+```{r}
+goodness_of_fit(kinetic_regression)
+```
+
+### Other functions
+To generate a `formula` object containing the formula of an *n^th^* kinetic reaction model, the function `f_gen(n)` can be called, by giving *n* as input.
+```{r}
+f_gen(1)
+
+f_gen(2)
+```
+
+### Other Models
+#### First-Order Multi-Target model (FOMT)
+
+The FOMT model is equivalent to the Single-Hit Multi-Target model (SHMT), a model developed in the field of radiation biology to describe the fraction of cell surviving radiation treatments. In radio-biology the problem is to calculate the probability of cell survival to a dose D of radiation whereas in the present context the probability that molecules survive within a given time interval. In both cases, the assumption is that the events that hit a cell or, as in this case, a food sample are random and they occur at a constant mean rate $k$ and independently of the time since the last event (the hits, therefore, follow the Poisson distribution). If a sample is composed of sub-units and at least *m* of them must be inactivated by at least one hit, the overall survival probability is given by the equation:
+
+$$\frac{Y(t)}{Y_0}=1-(1-e^{-k\,t})^n
+$$
+ More information on model development can be found in [this work](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3823792/).
+
+In `chemdeg` the FOMT model can be fitted by calling `FOMT()` function, giving as input a data-frame with time, concentration and error (optional) in the first three columns. 
+
+The output is an `nls` class object and thus all the functions from package `stats` can be used to retrieve gegression information. Even in this case the goodness-of-fit can be accessed through the  `goodness_of_fit()` function. 
+
+The non-linear fit with the FOMT model is quite sensitive to the initial value of the parameters and this is particularly true for the exponent *m*. The `FOMT()` function implements a routine for the automatic selection of the approximate initial values of model parameters which is based on the analysis of actual experimental data (see `par_est_FOMT()`). However, if `FOMT()` fails to converge, it is possible to input manually the initial parameter values using the function `FOMTm()` as RHS of the formula in the `stats::nls()` function:
+
+```{r}
+dat <- data.frame(
+  time = c(0, 1, 2, 3, 4, 5),
+  conc = c(1, 0.99, 0.98, 0.5, 0.24, 0.12)
+)
+
+try(FOMT(dat))
+nls(conc ~ FOMTm(time, k, n),
+  data = list(
+    conc = dat$conc,
+    time = dat$time
+  ),
+  start = list(k = 1, n = 12)
+)
+```
+
+
+ 
+## Examples
+### Generic workflow
+`chemdeg` package contains some simulated and actual experimental data that can be used for training purposes.
+```{r}
+urfa
+```
+The `urfa` data concern the normalized degradation kinetics of ascorbic acid in Urfa peppers dehydrated with hot air at 55, 65 and 75°C (Dağhan et al., 2018). `urfa` returns a data-frame with 4 columns. The first is time and the following are the degradation data measured at different temperatures. Data in this format are not readable from the `det_order()` function (see [Package usage]):
+
+The data-frame must be transformed into a data-frame with two columns (or three if the experimental error is available), the first containing the time data and the second the measured concentration of the compound (note that the data must not be necessarily normalized with respect to the concentration of the molecule at time 0):
+```{r}
+try(det_order(urfa))
+
+urfa1 <- data.frame(urfa$time_min, urfa$AA_55)
+ord.urfa.1 <- det_order(urfa1)
+```
+
+
+The function returns a message which informs the user about the best ordinary model that can explain the data, an order 2 degradation kinetic model in this case. the function `results()` provides more information:
+
+```{r}
+results(ord.urfa.1)
+```
+first it returns rhe estimate of the order *n* along with its confidence interval. We remind that the algorithm automatically chooses the integer value (if present within the confidence interval) that is the nearest to the estimate of *n*. For example, if the estimate is 1.6 and the CI is 0.8-2.4, the value taken would be 2. This might nonetheless be not the right value. For example the scientific literature or any precious information might suggest that a reaction model of order equal to 1 (which is inside the IC) could explain the data. In this case both alternative models should be used to fit the data and the results compared. The `results()` function, however, returns an explanation why a certain value of *n* was chosen. 
+
+Once the order of reaction is estimated to be 2 non-linear regression of the data with the appropriate model is performed and the estimated value of the rate constant is *k* and of its confidence interval is given. Finally, goodness-of-fit statistics are showed for non-linear regressions (note that this holds for reaction orders $\ne 0$).
+
+
+
+
+A call to the function `plot_ord()` allows to visualize the results:
+```{r}
+plot_ord(ord.urfa.1)
+```
+
+the plot on the left side represents the phase space of the system. On the right side, the kinetic data are plotted together with the model's regression curve.
+
+The results show that a 2nd-order degradation model best explains the data. The following example, however, shows that it is not always possible to proceed straightforwardly as in the present case and that caution is recommended before drawing conclusions about the appropriate degradation kinetic model that best fit experimental data.
+
+### FOMT example
+In this case we load data `fomtdata` from the package, that concerns the degradation kinetics of a 1.2 mM solution of 5-caffeoylquinic acid (5-CQA) in the presence of 1.2 mM ascorbic acid (Yusaku and Kuniyo, 2013). 
+```{r}
+fomtdata
+```
+In this case the data are ready to be passed to the `det_order()` function:
+```{r}
+ord.cqa <- det_order(fomtdata)
+```
+Indeed, the results are:
+```{r}
+results(ord.cqa)
+```
+
+In this case the software suggests that a 0-order model might actually fit the data. However a plot of the results indicates that a 0-order model is actually not suitable to explain the experimental data:
+```{r, fig.show='hold'}
+plot_ord(ord.cqa)
+```
+Please remind that the `kin_regr()` function returns the kinetic regression on kinetic data. Information can be retrivered to eventually check if the regression is indeed reliable:
+```{r}
+lin <- kin_regr(ord.cqa)
+summary(lin)
+```
+
+However, the data in the previous plot show a time-dependent trend that is reminiscent of the graph of the nonlinear FOMT function. The function`FOMT()` permits to fit the data with the same name model:
+```{r}
+FOMT(fomtdata)
+```
+It is possible that the function `FOMT()` could not be able to converge. This is because initial parameter values automatically chosen by the program are not close enough to the *true* ones (for more information see `stats::nls()` from package `stats`). To perform the non-linear regression a manual input of the initial parameter value is required using the function`FOMTm()` as RHS of the formula:
+```{r}
+regr.FOMT <- nls(y ~ FOMTm(t, k, n),
+  data = list(y = fomtdata$tCQA_AA, t = fomtdata$time_h),
+  start = list(n = 10, k = 0.05)
+)
+summary(regr.FOMT)
+```
+The following plot compares the results from both linear (in red color) and non-linear regression analysis of the experimental data:
+```{r}
+plot(fomtdata$time_h, fomtdata$tCQA_AA,
+  xlab = "time (h)", ylab = "C/C0"
+)
+new_t <- seq(0, max(fomtdata$time_h), length.out = 100)
+lines(new_t, predict(regr.FOMT, newdata = list(t = new_t)))
+lines(fomtdata$time_h, predict(lin), col = "red")
+```
+
+The FOMT model fits the data much better than the linear model.
+```{r}
+goodness_of_fit(regr.FOMT)
+```
+
