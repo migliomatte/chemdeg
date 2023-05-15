@@ -27,8 +27,8 @@ install.packages("chemdeg")
 
 # from GitHub
 library(devtools)
-devtools::install_github("migliomatte/chemdeg,
-                          dependencies = TRUE, build_vignettes = TRUE")
+devtools::install_github("migliomatte/chemdeg",
+                          dependencies = TRUE, build_vignettes = TRUE)
 ```
 
 ## Usage
