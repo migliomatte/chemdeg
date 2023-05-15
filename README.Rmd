@@ -16,6 +16,7 @@ knitr::opts_chunk$set(
 # chemdeg
 
 <!-- badges: start -->
+[![R-CMD-check](https://github.com/migliomatte/chemdeg/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/migliomatte/chemdeg/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 chemdeg is a package developed to assist food chemists in the objective selection of degradation kinetic models of foods and parameters estimation. The software implements a two-step method to this purpose. First, experimental data are analyzed in the so-called phase space which allows for the estimation of the order of the reaction; then the data are fitted with the appropriate standard kinetic model to estimate the reaction rate. The whole procedure is driven by rigorous statistical analyses of the results. The package also provides a routine to fit a non-standard kinetic degradation model named first-order multi-target model (FOMT).
