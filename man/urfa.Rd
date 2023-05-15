@@ -20,8 +20,8 @@ dehydrated at 75°C}}
 M. Karaaslan (2018)
 \emph{The effect of temperature and method of drying on isot (Urfa pepper)
 and its Vitamin C degradation kinetics},
-Italian Journal of Food Science, DOI:
-\href{http://dx.doi.org/10.14674/IJFS-1070}{10.14674/IJFS-1070},
+Italian Journal of Food Science,
+\doi{10.14674/IJFS-1070},
 fig 5, hot-air
 }
 \usage{

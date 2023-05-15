@@ -17,9 +17,8 @@ Yusaku N. and Kuniyo I. (2013)
 \emph{Degradation Kinetics of Chlorogenic
 Acid at Various pH Values and Effects of Ascorbic Acid and Epigallocatechin
 Gallate on Its Stability under Alkaline Conditions},
-Journal of Agricultural and Food Chemistry, DOI:
-\href{https://pubs.acs.org/doi/10.1021/jf304105w}{10.1021/jf304105w}, fig 2D,
-solid diamonds
+Journal of Agricultural and Food Chemistry, \doi{10.1021/jf304105w},
+fig 2D, solid diamonds
 }
 \usage{
 fomtdata

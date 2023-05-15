@@ -28,9 +28,8 @@
 #' *Degradation Kinetics of Chlorogenic
 #' Acid at Various pH Values and Effects of Ascorbic Acid and Epigallocatechin
 #' Gallate on Its Stability under Alkaline Conditions*,
-#' Journal of Agricultural and Food Chemistry, DOI:
-#' \href{https://pubs.acs.org/doi/10.1021/jf304105w}{10.1021/jf304105w}, fig 2D,
-#'  solid diamonds
+#' Journal of Agricultural and Food Chemistry, \doi{10.1021/jf304105w},
+#'  fig 2D, solid diamonds
 "fomtdata"
 
 #' Urfa pepper ascorbic acid degradation (2-nd order)
@@ -53,7 +52,7 @@
 #' M. Karaaslan (2018)
 #' *The effect of temperature and method of drying on isot (Urfa pepper)
 #' and its Vitamin C degradation kinetics*,
-#' Italian Journal of Food Science, DOI:
-#' \href{http://dx.doi.org/10.14674/IJFS-1070}{10.14674/IJFS-1070},
+#' Italian Journal of Food Science,
+#' \doi{10.14674/IJFS-1070},
 #' fig 5, hot-air
 "urfa"
