@@ -41,8 +41,10 @@ test_that("f_gen works with n!=1", {
 
 # dup_rem
 test_that("dup_rem removes duplicates in dataframe with 2 columns", {
-  pippo <- data.frame(t = c(0, 1, 2, 3, 4, 5, 6, 7),
-                      x = c(10, 10, 8, 7, 7, 7, 6, 6))
+  pippo <- data.frame(
+    t = c(0, 1, 2, 3, 4, 5, 6, 7),
+    x = c(10, 10, 8, 7, 7, 7, 6, 6)
+  )
   res <- data.frame(t = c(0.5, 2, 4.25, 6.5), x = c(10, 8, 7, 6))
   expect_equal(dup_rem(pippo), res, ignore_attr = TRUE)
 })
@@ -53,9 +55,11 @@ test_that("dup_rem removes duplicates in dataframe with 3 columns", {
     x = c(10, 10, 8, 7, 7, 7, 6, 6),
     err = c(0.5, 0.6, 0.4, 0.7, 0.8, 0.6, 0.12, 0.24)
   )
-  res <- data.frame(t = c(0.5, 2, 4.25, 6.5),
-                    x = c(10, 8, 7, 6),
-                    err = c(1.1, 0.4, 2.1, 0.36))
+  res <- data.frame(
+    t = c(0.5, 2, 4.25, 6.5),
+    x = c(10, 8, 7, 6),
+    err = c(1.1, 0.4, 2.1, 0.36)
+  )
   expect_equal(dup_rem(pippo), res, ignore_attr = TRUE)
 })
 
@@ -99,9 +103,11 @@ test_that("check fit returns true with a significant linear regression", {
 
 # logformerr
 test_that("logformerr returns the right output", {
-  dframe <- data.frame(alpha = c(1, 2, 3),
-                       beta = c(20, 10, 5),
-                       err_beta = c(0.5, 0.4, 0.3))
+  dframe <- data.frame(
+    alpha = c(1, 2, 3),
+    beta = c(20, 10, 5),
+    err_beta = c(0.5, 0.4, 0.3)
+  )
   fdframe <- data.frame(
     log_x = c(log((20 + 10) / 2), log((10 + 5) / 2)),
     log_dx_dt = c(log((20 - 10) / (2 - 1)), log((10 - 5) / (3 - 2))),

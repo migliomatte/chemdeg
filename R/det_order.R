@@ -36,7 +36,9 @@ f_gen <- function(n) {
     n1 <- as.character(n - 1)
     n2 <- as.character(1 / (1 - n))
     f_string <- paste("y~(", n1, "*(k*t+(y0^(-", n1, "))/", n1, "))^",
-                      n2, sep = "")
+      n2,
+      sep = ""
+    )
     form <- stats::as.formula(f_string)
   }
   return(form)

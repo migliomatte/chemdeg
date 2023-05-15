@@ -157,8 +157,10 @@ AICC <- function(fit) {
 #' x <- c(1, 2, 3, 4, 5)
 #' y <- c(1.2, 3.9, 8.6, 17.4, 26)
 #' er <- c(0.5, 0.8, 0.5, 1.9, 1.2)
-#' fit1 <- nls(y ~ k * x^2, data = list(x = x, y = y), start = list(k = 1),
-#'  weights = 1 / er^2)
+#' fit1 <- nls(y ~ k * x^2,
+#'   data = list(x = x, y = y), start = list(k = 1),
+#'   weights = 1 / er^2
+#' )
 #' goodness_of_fit(fit1)
 goodness_of_fit <- function(fit) {
   if (methods::is(fit, "ord_res")) {

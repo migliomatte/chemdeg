@@ -115,12 +115,12 @@ test_that("If estimated model parameters are not significant a particular
 
 test_that("If estimated model parameters are not significant a particular
           message is displayed - case order!=0", {
-            t <- c(0, 2, 4, 6, 8, 10)
-            set.seed(1)
-            conc <- 12 * exp(-0.5 * t) + rnorm(length(t), 0, 0.05)
-            pippo <- data.frame(t, conc, err = abs(rnorm(length(t), 0, 1)))
-            expect_no_error(res <- det_order(pippo))
-            res[[3]]<-FALSE
-            expect_no_error(results(res))
-            expect_equal(results(res), NULL)
-          })
+  t <- c(0, 2, 4, 6, 8, 10)
+  set.seed(1)
+  conc <- 12 * exp(-0.5 * t) + rnorm(length(t), 0, 0.05)
+  pippo <- data.frame(t, conc, err = abs(rnorm(length(t), 0, 1)))
+  expect_no_error(res <- det_order(pippo))
+  res[[3]] <- FALSE
+  expect_no_error(results(res))
+  expect_equal(results(res), NULL)
+})

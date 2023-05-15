@@ -61,18 +61,18 @@ plot_ord(res)
 #### First-order multi-target model fitting
 To fit the first-order multi-target model, use the function `FOMT()`. 
 ```{r}
-fit_fomt<-FOMT(fomtdata)
+fit_fomt <- FOMT(fomtdata)
 summary(fit_fomt)
 ```
 where `fomtdata` is an example data-frame provided with the package.
 
 Alternatively, if the function does not converge the function `nls` from package stats with the function `FOMTm()` as RHS of the formula and initial values inserted arbitrarily:
 ```{r}
-fit_fomt1<-nls(y ~ FOMTm(t, k, n),
-               data = list(y = fomtdata$tCQA_AA, t = fomtdata$time_h),
-               start = list(n = 10, k = 0.05))
+fit_fomt1 <- nls(y ~ FOMTm(t, k, n),
+  data = list(y = fomtdata$tCQA_AA, t = fomtdata$time_h),
+  start = list(n = 10, k = 0.05)
+)
 summary(fit_fomt1)
-
 ```
 
 #### Goodness-of-fit statistics
