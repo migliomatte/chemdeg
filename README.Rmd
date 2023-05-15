@@ -18,9 +18,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of chemdeg is to assist chemical degradation kinetic data analysis. It provides a rigorous statistical method for the determination of the reaction order for n^th^-order kinetic models, which is often prone to subjectivity.
-The first-order multi-target model (FOMT) is introduced as a genuine alternative to Weibull distribution.
-In addition, some goodness-of-fit statistics have been added for nonlinear models. 
+chemdeg is a package developed to assist food chemists in the objective selection of degradation kinetic models of foods and parameters estimation. The software implements a two-step method to this purpose. First, experimental data are analyzed in the so-called phase space which allows for the estimation of the order of the reaction; then the data are fitted with the appropriate standard kinetic model to estimate the reaction rate. The whole procedure is driven by rigorous statistical analyses of the results. The package also provides a routine to fit a non-standard kinetic degradation model named first-order multi-target model (FOMT).
 
 ## Installation
 
@@ -31,7 +29,9 @@ You can install the development version of chemdeg like so:
 install.packages("chemdeg")
 
 # from GitHub
-devtools::install_github("migliomatte/chemdeg")
+library(devtools)
+devtools::install_github("migliomatte/chemdeg,
+                          dependencies = TRUE, build_vignettes = TRUE")
 ```
 
 ## Usage
@@ -41,32 +41,34 @@ library(chemdeg)
 ```
 
 #### Determination of the reaction order
-The determination of the reaction order of a generic degradation kinetic model is often prone to subjectivity and can be misleading. By analyzing the phase space of the dynamical system it is possible to rigorously determine the reaction order thought statistics. In the package `chemdeg` this analysis can be performed with the function `det_order()`:
+The determination of the reaction order of a generic degradation kinetic model is often prone to subjectivity. By analyzing the phase space of the kinetic system it is possible to statistically determine the reaction order. This information can then be used to determine the reaction rate constant. In the package `chemdeg` the whole analysis can be performed with the function `det_order()`:
 
 ```{r}
 res <- det_order(ord1)
 ```
 
-where `ord1` is built in the package data-frame from a 1^st^-order kinetic model. 
+where `ord1` is a built in function for 1^st^-order kinetic model data. 
 
-The summary of the results can be accessed with the function results:
+The function `results` returns statistics and parameters estimates:
 ```{r}
 results(res)
 ```
 
-and the plot of both the phase space and the kinetic degradation data with relative regressions can be accessed with `plot_ord()`:
+Plots of the data in both the phase space and the normal concentration vs time space along with their best fits with model equations can be accessed with `plot_ord()`:
 ```{r}
 plot_ord(res)
 ```
+
 #### First-order multi-target model fitting
-To fit the first-order multi-target model, use the function `FOMT()`. 
+
+The following is an example of first-order multi-target (FOMT) model. The `FOMT()` function can be used to perform the fit: 
 ```{r}
 fit_fomt <- FOMT(fomtdata)
 summary(fit_fomt)
 ```
 where `fomtdata` is an example data-frame provided with the package.
 
-Alternatively, if the function does not converge the function `nls` from package stats with the function `FOMTm()` as RHS of the formula and initial values inserted arbitrarily:
+If the `FOMT()` function does not converge, it is possible to use the `nls` function from `stats` package as follows (in this case a ):
 ```{r}
 fit_fomt1 <- nls(y ~ FOMTm(t, k, n),
   data = list(y = fomtdata$tCQA_AA, t = fomtdata$time_h),
@@ -76,11 +78,11 @@ summary(fit_fomt1)
 ```
 
 #### Goodness-of-fit statistics
-`chemdeg` implements the chi-squared reduced ($\chi^2_{red}=\chi^2/df$ where $df$ are the degrees of freedom) and Akaike Information Criterion with correction for small sample size (AICc) as goodness of fit measures. Those measures can be accessed with the functions `chiquad_red()`and `AICC()`,respectively.
+`chemdeg` implements the chi-squared reduced statistics ($\chi^2_{red}=\chi^2/df$ where $df$ are the degrees of freedom) and the Akaike Information Criterion with correction for small sample size (AICc) as goodness of fit measures. These can be accessed with the functions `chiquad_red()`and `AICC()`, respectively.
 
-To access a table with Bayesian Information Criterion (BIC), Akaike Information Criterion (AIC), AICc, Root Means Squared Error (RMSE) and $\chi^2_{red}$ (from both package `stats` and `chemdeg`) call the function  `goodness_of_fit()`:
+To access the full table comprising the Bayesian Information Criterion (BIC), Akaike Information Criterion (AIC), AICc, Root Means Squared Error (RMSE) and $\chi^2_{red}$ (from both package `stats` and `chemdeg`) call the function  `goodness_of_fit()`:
 ```{r}
 goodness_of_fit(fit_fomt)
 ```
 
-For more details see the vignette [chemdeg basics](articles/chemdeg_basics.html).
+For more details see [chemdeg basics](articles/chemdeg_basics.html).
