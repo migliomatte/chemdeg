@@ -85,17 +85,22 @@
 </h1></div>
 <!-- badges: start -->
 <!-- badges: end -->
-<p>The goal of chemdeg is to assist chemical degradation kinetic data analysis. It provides a rigorous statistical method for the determination of the reaction order for n<sup>th</sup>-order kinetic models, which is often prone to subjectivity. The first-order multi-target model (FOMT) is introduced as a genuine alternative to Weibull distribution. In addition, some goodness-of-fit statistics have been added for nonlinear models.</p>
+<p>chemdeg is a package developed to assist food chemists in the objective selection of degradation kinetic models of foods and parameters estimation. The software implements a two-step method to this purpose. First, experimental data are analyzed in the so-called phase space which allows for the estimation of the order of the reaction; then the data are fitted with the appropriate standard kinetic model to estimate the reaction rate. The whole procedure is driven by rigorous statistical analyses of the results. The package also provides a routine to fit a non-standard kinetic degradation model named first-order multi-target model (FOMT).</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <p>You can install the development version of chemdeg like so:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># from CRAN</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"chemdeg"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># from GitHub</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"migliomatte/chemdeg"</span>,dependencies <span class="op">=</span> <span class="cn">TRUE</span>, build_vignettes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># from CRAN</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"chemdeg"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># from GitHub</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="sc">&lt;</span><span class="er">&lt;&lt;&lt;&lt;&lt;&lt;</span> HEAD</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(devtools)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"migliomatte/chemdeg,</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="st">                          dependencies = TRUE, build_vignettes = TRUE"</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="sc">==</span><span class="er">=====</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"migliomatte/chemdeg"</span>,<span class="at">dependencies =</span> <span class="cn">TRUE</span>, <span class="at">build_vignettes =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span><span class="er">&gt;&gt;&gt;&gt;&gt;&gt;</span> 2f6a524370c8ca01a19c5ed9f9ce2ed8d6696eb5</span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
@@ -105,12 +110,12 @@
 <div class="section level4">
 <h4 id="determination-of-the-reaction-order">Determination of the reaction order<a class="anchor" aria-label="anchor" href="#determination-of-the-reaction-order"></a>
 </h4>
-<p>The determination of the reaction order of a generic degradation kinetic model is often prone to subjectivity and can be misleading. By analyzing the phase space of the dynamical system it is possible to rigorously determine the reaction order thought statistics. In the package <code>chemdeg</code> this analysis can be performed with the function <code><a href="reference/det_order.html">det_order()</a></code>:</p>
+<p>The determination of the reaction order of a generic degradation kinetic model is often prone to subjectivity. By analyzing the phase space of the kinetic system it is possible to statistically determine the reaction order. This information can then be used to determine the reaction rate constant. In the package <code>chemdeg</code> the whole analysis can be performed with the function <code><a href="reference/det_order.html">det_order()</a></code>:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/det_order.html">det_order</a></span><span class="op">(</span><span class="va">ord1</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Reaction order estimated: 1</span></span></code></pre></div>
-<p>where <code>ord1</code> is built in the package data-frame from a 1<sup>st</sup>-order kinetic model.</p>
-<p>The summary of the results can be accessed with the function results:</p>
+<p>where <code>ord1</code> is a built in function for 1<sup>st</sup>-order kinetic model data.</p>
+<p>The function <code>results</code> returns statistics and parameters estimates:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/results.html">results</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -149,12 +154,17 @@
 <span><span class="co">#&gt; RMSE:         2.002812</span></span>
 <span><span class="co">#&gt; Chi-sq_red:   5.379602</span></span>
 <span><span class="co">#&gt; -----------------------------------------------------</span></span></code></pre></div>
-<p>and the plot of both the phase space and the kinetic degradation data with relative regressions can be accessed with <code><a href="reference/plot_ord.html">plot_ord()</a></code>:</p>
+<p>Plots of the data in both the phase space and the normal concentration vs time space along with their best fits with model equations can be accessed with <code><a href="reference/plot_ord.html">plot_ord()</a></code>:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/plot_ord.html">plot_ord</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-4-1.png" width="100%"><img src="reference/figures/README-unnamed-chunk-4-2.png" width="100%"> #### First-order multi-target model fitting To fit the first-order multi-target model, use the function <code><a href="reference/FOMT.html">FOMT()</a></code>.</p>
+<p><img src="reference/figures/README-unnamed-chunk-4-1.png" width="100%"><img src="reference/figures/README-unnamed-chunk-4-2.png" width="100%"></p>
+</div>
+<div class="section level4">
+<h4 id="first-order-multi-target-model-fitting">First-order multi-target model fitting<a class="anchor" aria-label="anchor" href="#first-order-multi-target-model-fitting"></a>
+</h4>
+<p>The following is an example of first-order multi-target (FOMT) model. The <code><a href="reference/FOMT.html">FOMT()</a></code> function can be used to perform the fit:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">fit_fomt</span><span class="op">&lt;-</span><span class="fu"><a href="reference/FOMT.html">FOMT</a></span><span class="op">(</span><span class="va">fomtdata</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">fit_fomt</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/FOMT.html">FOMT</a></span><span class="op">(</span><span class="va">fomtdata</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">fit_fomt</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Formula: y ~ 1 - (1 - exp(-k * t))^n</span></span>
@@ -171,11 +181,12 @@
 <span><span class="co">#&gt; Number of iterations to convergence: 10 </span></span>
 <span><span class="co">#&gt; Achieved convergence tolerance: 3.98e-06</span></span></code></pre></div>
 <p>where <code>fomtdata</code> is an example data-frame provided with the package.</p>
-<p>Alternatively, if the function does not converge the function <code>nls</code> from package stats with the function <code><a href="reference/FOMTm.html">FOMTm()</a></code> as RHS of the formula and initial values inserted arbitrarily:</p>
+<p>If the <code><a href="reference/FOMT.html">FOMT()</a></code> function does not converge, it is possible to use the <code>nls</code> function from <code>stats</code> package as follows (in this case a ):</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">fit_fomt1</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/nls.html" class="external-link">nls</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="fu"><a href="reference/FOMTm.html">FOMTm</a></span><span class="op">(</span><span class="va">t</span>, <span class="va">k</span>, <span class="va">n</span><span class="op">)</span>,</span>
-<span>               data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">fomtdata</span><span class="op">$</span><span class="va">tCQA_AA</span>, t <span class="op">=</span> <span class="va">fomtdata</span><span class="op">$</span><span class="va">time_h</span><span class="op">)</span>,</span>
-<span>               start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span>, k <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">fit_fomt1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/nls.html" class="external-link">nls</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="fu"><a href="reference/FOMTm.html">FOMTm</a></span><span class="op">(</span><span class="va">t</span>, <span class="va">k</span>, <span class="va">n</span><span class="op">)</span>,</span>
+<span>  data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">fomtdata</span><span class="op">$</span><span class="va">tCQA_AA</span>, t <span class="op">=</span> <span class="va">fomtdata</span><span class="op">$</span><span class="va">time_h</span><span class="op">)</span>,</span>
+<span>  start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span>, k <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">fit_fomt1</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Formula: y ~ FOMTm(t, k, n)</span></span>
@@ -195,8 +206,8 @@
 <div class="section level4">
 <h4 id="goodness-of-fit-statistics">Goodness-of-fit statistics<a class="anchor" aria-label="anchor" href="#goodness-of-fit-statistics"></a>
 </h4>
-<p><code>chemdeg</code> implements the chi-squared reduced (<span class="math inline"><em>χ</em><sub><em>r</em><em>e</em><em>d</em></sub><sup>2</sup> = <em>χ</em><sup>2</sup>/<em>d</em><em>f</em></span> where <span class="math inline"><em>d</em><em>f</em></span> are the degrees of freedom) and Akaike Information Criterion with correction for small sample size (AICc) as goodness of fit measures. Those measures can be accessed with the functions <code><a href="reference/chiquad_red.html">chiquad_red()</a></code>and <code><a href="reference/AICC.html">AICC()</a></code>,respectively.</p>
-<p>To access a table with Bayesian Information Criterion (BIC), Akaike Information Criterion (AIC), AICc, Root Means Squared Error (RMSE) and <span class="math inline"><em>χ</em><sub><em>r</em><em>e</em><em>d</em></sub><sup>2</sup></span> (from both package <code>stats</code> and <code>chemdeg</code>) call the function <code><a href="reference/goodness_of_fit.html">goodness_of_fit()</a></code>:</p>
+<p><code>chemdeg</code> implements the chi-squared reduced statistics (<span class="math inline"><em>χ</em><sub><em>r</em><em>e</em><em>d</em></sub><sup>2</sup> = <em>χ</em><sup>2</sup>/<em>d</em><em>f</em></span> where <span class="math inline"><em>d</em><em>f</em></span> are the degrees of freedom) and the Akaike Information Criterion with correction for small sample size (AICc) as goodness of fit measures. These can be accessed with the functions <code><a href="reference/chiquad_red.html">chiquad_red()</a></code>and <code><a href="reference/AICC.html">AICC()</a></code>, respectively.</p>
+<p>To access the full table comprising the Bayesian Information Criterion (BIC), Akaike Information Criterion (AIC), AICc, Root Means Squared Error (RMSE) and <span class="math inline"><em>χ</em><sub><em>r</em><em>e</em><em>d</em></sub><sup>2</sup></span> (from both package <code>stats</code> and <code>chemdeg</code>) call the function <code><a href="reference/goodness_of_fit.html">goodness_of_fit()</a></code>:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/goodness_of_fit.html">goodness_of_fit</a></span><span class="op">(</span><span class="va">fit_fomt</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                    Value</span></span>
@@ -205,7 +216,7 @@
 <span><span class="co">#&gt; BIC:        -23.91848633</span></span>
 <span><span class="co">#&gt; RMSE:         0.04243006</span></span>
 <span><span class="co">#&gt; Chi-sq_red:           NA</span></span></code></pre></div>
-<p>For more details see the vignette <a href="articles/chemdeg_basics.html">chemdeg basics</a>.</p>
+<p>For more details see <a href="articles/chemdeg_basics.html">chemdeg basics</a>.</p>
 </div>
 </div>
 </div>
