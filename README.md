@@ -23,7 +23,7 @@ You can install the development version of chemdeg like so:
 install.packages("chemdeg")
 
 # from GitHub
-devtools::install_github("migliomatte/chemdeg")
+devtools::install_github("migliomatte/chemdeg",dependencies = TRUE, build_vignettes = TRUE)
 ```
 
 ## Usage
