@@ -178,7 +178,7 @@
 <span><span class="co">#&gt; Number of iterations to convergence: 10 </span></span>
 <span><span class="co">#&gt; Achieved convergence tolerance: 3.98e-06</span></span></code></pre></div>
 <p>where <code>fomtdata</code> is an example data-frame provided with the package.</p>
-<p>If the <code><a href="reference/FOMT.html">FOMT()</a></code> function does not converge, it is possible to use the <code>nls</code> function from <code>stats</code> package as follows (in this case a ):</p>
+<p>If the <code><a href="reference/FOMT.html">FOMT()</a></code> function does not converge, it is possible to use the <code>nls</code> function from <code>stats</code> package as follows:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fit_fomt1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/nls.html" class="external-link">nls</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="fu"><a href="reference/FOMTm.html">FOMTm</a></span><span class="op">(</span><span class="va">t</span>, <span class="va">k</span>, <span class="va">n</span><span class="op">)</span>,</span>
 <span>  data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">fomtdata</span><span class="op">$</span><span class="va">tCQA_AA</span>, t <span class="op">=</span> <span class="va">fomtdata</span><span class="op">$</span><span class="va">time_h</span><span class="op">)</span>,</span>
