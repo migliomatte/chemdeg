@@ -135,7 +135,7 @@ summary(fit_fomt)
 where `fomtdata` is an example data-frame provided with the package.
 
 If the `FOMT()` function does not converge, it is possible to use the
-`nls` function from `stats` package as follows (in this case a ):
+`nls` function from `stats` package as follows:
 
 ``` r
 fit_fomt1 <- nls(y ~ FOMTm(t, k, n),
