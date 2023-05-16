@@ -86,4 +86,7 @@ To access the full table comprising the Bayesian Information Criterion (BIC), Ak
 goodness_of_fit(fit_fomt)
 ```
 
-For more details see [chemdeg basics](articles/chemdeg_basics.html).
+For more details see 
+``` r
+vignette("chemdeg_basics","chemdeg")
+```
