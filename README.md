@@ -4,6 +4,8 @@
 # chemdeg
 
 <!-- badges: start -->
+
+[![R-CMD-check](https://github.com/migliomatte/chemdeg/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/migliomatte/chemdeg/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 chemdeg is a package developed to assist food chemists in the objective
@@ -180,4 +182,8 @@ goodness_of_fit(fit_fomt)
 #> Chi-sq_red:           NA
 ```
 
-For more details see [chemdeg basics](articles/chemdeg_basics.html).
+For more details see
+
+``` r
+vignette("chemdeg_basics","chemdeg")
+```
