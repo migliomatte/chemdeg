@@ -171,9 +171,7 @@ par_est <- function(dframe, n) {
 #' \enumerate{
 #' \item first columns, time data;
 #' \item second columns, concentration data;
-#' \item third column (optional, but higly recommended), experimental error}
-#'
-
+#' \item third column (optional, but highly recommended), experimental error}
 #'
 #' @param dframe a data-frame with 2 or 3 columns, containing time,
 #' concentrations, and (optional) error data.

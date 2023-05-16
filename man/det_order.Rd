@@ -29,7 +29,7 @@ The input of the function is a data-frame organized as follows:
 \enumerate{
 \item first columns, time data;
 \item second columns, concentration data;
-\item third column (optional, but higly recommended), experimental error}
+\item third column (optional, but highly recommended), experimental error}
 }
 \examples{
 t <- c(0, 4, 8, 12, 16, 20)

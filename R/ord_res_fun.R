@@ -17,6 +17,7 @@
 #'
 #' phase_space(res)
 phase_space <- function(x) {
+  stopifnot(methods::is(x,"ord_res"))
   return(x[[2]])
 }
 
@@ -46,6 +47,7 @@ phase_space <- function(x) {
 #'
 #' kin_regr(res)
 kin_regr <- function(x) {
+  stopifnot(methods::is(x,"ord_res"))
   return(x[[4]])
 }
 
@@ -230,5 +232,6 @@ k_value <- function(ordres) {
 
 
 n_value <- function(ordres) {
+  stopifnot(methods::is(ordres,"ord_res"))
   return(ordres[[6]])
 }

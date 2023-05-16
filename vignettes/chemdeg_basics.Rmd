@@ -38,9 +38,9 @@ A plot of $\log{|\frac{dy}{dt}|}$ versus $\log{y}$ defines the phase space of th
 The slope can be easily determined by linear regression (weighted on experimental error if available) of log-transformed data.  Both known and unknown uncertainties can affect this estimation. Thus a first decision about the appropriate order of the reaction is taken by the program on the basis of the following four criteria:
 
 1. if the 95% confidence interval of $n$ includes one or more integer numbers, then the best estimate of the reaction order is that integer number or the integer which is closest to the mean estimate of $n$;
-2. if the 95% confidence interval of $n$ does not include integer numbers than the order of the reaction is considered fractional amd equal to its best estimate;
+2. if the 95% confidence interval of $n$ does not include integer numbers than the order of the reaction is considered fractional and equal to its best estimate;
 3. if the estimated order $n$ is not statistically significant but the intercept is significant, then the most likely order of reaction is 0;
-4. if neither the estimates of the slope and the intercept are statistically significant then a different modelling approach must be considered. The package provides a possible non-linear alternative model (FOMT, see other model section)
+4. if neither the estimates of the slope and the intercept are statistically significant then a different modeling approach must be considered. The package provides a possible non-linear alternative model (FOMT, see other model section)
 
 The general solution of eq.(1) is:
 $$
@@ -49,7 +49,7 @@ y(t)=\begin{cases}
 y_0\,e^{-k\,t} & \text{if $n=0$}
 \end{cases}
 $$
-Once the reation order has been determined, non-linear least squares regression can be performed using the above solution with the rate constant $k$ as free parameter. 
+Once the reaction order has been determined, non-linear least squares regression can be performed using the above solution with the rate constant $k$ as free parameter. 
 
 ## Package usage
 
@@ -127,7 +127,7 @@ $$
 
 In `chemdeg` the FOMT model can be fitted by calling `FOMT()` function, giving as input a data-frame with time, concentration and error (optional) in the first three columns. 
 
-The output is an `nls` class object and thus all the functions from package `stats` can be used to retrieve gegression information. Even in this case the goodness-of-fit can be accessed through the  `goodness_of_fit()` function. 
+The output is an `nls` class object and thus all the functions from package `stats` can be used to retrieve regression information. Even in this case the goodness-of-fit can be accessed through the  `goodness_of_fit()` function. 
 
 The non-linear fit with the FOMT model is quite sensitive to the initial value of the parameters and this is particularly true for the exponent *m*. The `FOMT()` function implements a routine for the automatic selection of the approximate initial values of model parameters which is based on the analysis of actual experimental data (see `par_est_FOMT()`). However, if `FOMT()` fails to converge, it is possible to input manually the initial parameter values using the function `FOMTm()` as RHS of the formula in the `stats::nls()` function:
 
@@ -171,7 +171,7 @@ The function returns a message which informs the user about the best ordinary mo
 ```{r}
 results(ord.urfa.1)
 ```
-first it returns rhe estimate of the order *n* along with its confidence interval. We remind that the algorithm automatically chooses the integer value (if present within the confidence interval) that is the nearest to the estimate of *n*. For example, if the estimate is 1.6 and the CI is 0.8-2.4, the value taken would be 2. This might nonetheless be not the right value. For example the scientific literature or any precious information might suggest that a reaction model of order equal to 1 (which is inside the IC) could explain the data. In this case both alternative models should be used to fit the data and the results compared. The `results()` function, however, returns an explanation why a certain value of *n* was chosen. 
+first it returns the estimate of the order *n* along with its confidence interval. We remind that the algorithm automatically chooses the integer value (if present within the confidence interval) that is the nearest to the estimate of *n*. For example, if the estimate is 1.6 and the CI is 0.8-2.4, the value taken would be 2. This might nonetheless be not the right value. For example the scientific literature or any precious information might suggest that a reaction model of order equal to 1 (which is inside the CI) could explain the data. In this case both alternative models should be used to fit the data and the results compared. The `results()` function, however, returns an explanation why a certain value of *n* was chosen. 
 
 Once the order of reaction is estimated to be 2 non-linear regression of the data with the appropriate model is performed and the estimated value of the rate constant is *k* and of its confidence interval is given. Finally, goodness-of-fit statistics are showed for non-linear regressions (note that this holds for reaction orders $\ne 0$).
 
@@ -205,7 +205,7 @@ In this case the software suggests that a 0-order model might actually fit the d
 ```{r, fig.show='hold'}
 plot_ord(ord.cqa)
 ```
-Please remind that the `kin_regr()` function returns the kinetic regression on kinetic data. Information can be retrivered to eventually check if the regression is indeed reliable:
+Please remind that the `kin_regr()` function returns the kinetic regression on kinetic data. Information can be retrieved to eventually check if the regression is indeed reliable:
 ```{r}
 lin <- kin_regr(ord.cqa)
 summary(lin)

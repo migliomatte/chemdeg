@@ -9,7 +9,7 @@ A data frame with 6 rows and 3 columns:
 \describe{
 \item{t}{time}
 \item{concentration}{simulated concentration data at each time point}
-\item{std.error}{simulated experimental erro}
+\item{std.error}{simulated experimental error}
 }
 }
 \usage{
