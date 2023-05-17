@@ -1,3 +1,5 @@
+# chemdeg (development version)
+
 # chemdeg 0.1.2
 
 * Debugging for `par` modifications using `on.exit()` function
