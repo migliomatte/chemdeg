@@ -26,6 +26,8 @@
 #'
 #' plot_ord(res)
 plot_ord <- function(ord_res) {
+  oldpar<-par(no.readonly = TRUE)
+  on.exit(par(oldpar))
   if (methods::is(ord_res, "ord_res")) {
     dflplot <- as.data.frame(ord_res[[1]])
 
@@ -106,7 +108,6 @@ plot_ord <- function(ord_res) {
     if (!ord_res[[3]]) {
       message("NB: parameters of the regression are not significant!")
     }
-    graphics::par(ask = FALSE)
   } else {
     stop("Error: the argument is not an object from det_order function")
   }

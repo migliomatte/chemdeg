@@ -8,4 +8,6 @@
 
 This is a resubmission. In this version I have:
 
-* Corrected the link to the vignette in the README file
+* Corrected `par` modifications using `on.exit()` function
+
+* I have not added a reference work for the method used; the paper have not been released yet. It will be referenced once published.

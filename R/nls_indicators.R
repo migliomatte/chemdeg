@@ -170,9 +170,10 @@ goodness_of_fit <- function(fit) {
     aic <- stats::AIC(fit)
     aicc <- AICC(fit)
     bic <- stats::BIC(fit)
+    oldoptions<-options()
+    on.exit(options(oldoptions))
     options(show.error.messages = FALSE)
     chi_red <- try(chiquad_red(fit))
-    options(show.error.messages = TRUE)
     if (!methods::is(chi_red, "numeric")) {
       chi_red <- NA
     }
