@@ -83,7 +83,7 @@ results(res)
 #>  Estimate of k: 
 #>    Estimate  Std. Error  t value     Pr(>|t|)
 #> k 0.6878765 0.002626997 261.8489 1.541636e-11
-#> In attesa che venga eseguita la profilazione...
+#> Waiting for profiling to be done...
 #> Confidence interval of k: 
 #>      2.5%     97.5% 
 #> 0.6812276 0.6947116 
