@@ -221,6 +221,7 @@ test_that("det_order works with 1-order model with unweighted data", {
 test_that("det_order works with 2-order model with unweighted data", {
   t <- c(0, 4, 8, 12, 16, 20)
 
+  set.seed(1)
   conc <- 10 / (1 + 10 * 0.5 * t) * (1 + rnorm(length(t), 0, 0.1))
 
   dframe <- data.frame(t, conc)
@@ -232,14 +233,15 @@ test_that("det_order works with 2-order model with unweighted data", {
 })
 
 test_that("det_order works with 2-order model with weighted data", {
-  t <- c(0, 4, 8, 12, 16, 20)
-  err <- rnorm(length(t), 0, 0.1)
-  conc <- 10 / (1 + 10 * 0.5 * t) * (1 + err)
+  t <- c(0, 4, 8, 12, 16, 20, 30, 60)
+  set.seed(1)
+  err <- rnorm(length(t), 0, 0.001)
+  conc <- 10* (1 + err) / (1 + 10 * 0.5 * t)
 
   dframe <- data.frame(t, conc, err)
   expect_no_error(res <- det_order(dframe))
   expect_equal(res[[6]], c(Order = 2), tolerance = 0.8)
-  expect_equal(k_value(res), c(k = 0.5), tolerance = 0.5)
+  expect_equal(k_value(res), c(k = 0.5), tolerance = 0.2)
   expect_s3_class(res[[4]], "nls")
   expect_s3_class(res, "ord_res")
 })

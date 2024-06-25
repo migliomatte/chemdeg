@@ -1,13 +1,12 @@
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note
+0 errors | 0 warnings | 0 notes
 
-* This is a new release. 
 
-## Resubmission
+## Correcting unstable tests
 
-This is a resubmission. In this version I have:
+set.seed() function was added to some tests which relied on rnorm function, causing unwanted errors. 
 
-* Corrected `par` modifications using `on.exit()` function
+## Adding citation information
 
-* I have not added a reference work for the method used; the paper have not been released yet. It will be referenced once published.
+Citation information were modified and updated.
